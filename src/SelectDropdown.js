@@ -410,5 +410,4 @@ const SelectDropdown = (
   );
 };
 
-// Shut up typescript
 export default forwardRef((props, ref) => SelectDropdown(props, ref));

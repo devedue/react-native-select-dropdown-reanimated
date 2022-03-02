@@ -1,46 +1,46 @@
 {
-  "name": "react-native-select-dropdown-reanimated",
-  "version": "1.8.0",
-  "description": "react-native-select-dropdown-reanimated is a highly customized dropdown | select | picker | menu for react native that works for andriod and iOS platforms.",
-  "main": "index.js",
-  "typings": "index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "react-native",
-    "android",
-    "ios",
-    "dropdown",
-    "select",
-    "option",
-    "selector",
-    "picker",
-    "menu",
-    "modal"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/devedue/react-native-select-dropdown-reanimated.git"
-  },
-  "author": "Adel Reda (AdelRedaa97)",
-  "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.21",
-    "react": "^17.0.2",
-    "react-native": "^0.67.3",
-    "react-native-reanimated": "^2.4.1"
-  },
-  "bugs": {
-    "url": "https://github.com/devedue/react-native-select-dropdown-reanimated/issues"
-  },
-  "homepage": "https://github.com/devedue/react-native-select-dropdown-reanimated#readme",
-  "directories": {
-    "example": "examples"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.14.179",
-    "@types/react": "^17.0.39",
-    "@types/react-native": "^0.67.1"
-  }
+    "name": "react-native-select-dropdown-reanimated",
+    "version": "1.8.1",
+    "description": "react-native-select-dropdown-reanimated is a highly customized dropdown | select | picker | menu for react native that works for andriod and iOS platforms.",
+    "main": "index.js",
+    "typings": "index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "react-native",
+        "android",
+        "ios",
+        "dropdown",
+        "select",
+        "option",
+        "selector",
+        "picker",
+        "menu",
+        "modal"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/devedue/react-native-select-dropdown-reanimated.git"
+    },
+    "author": "Adel Reda (AdelRedaa97)",
+    "license": "MIT",
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "react": "^17.0.2",
+        "react-native": "^0.67.3",
+        "react-native-reanimated": "^2.4.1"
+    },
+    "bugs": {
+        "url": "https://github.com/devedue/react-native-select-dropdown-reanimated/issues"
+    },
+    "homepage": "https://github.com/devedue/react-native-select-dropdown-reanimated#readme",
+    "directories": {
+        "example": "examples"
+    },
+    "devDependencies": {
+        "@types/lodash": "^4.14.179",
+        "@types/react": "^17.0.39",
+        "@types/react-native": "^0.67.1"
+    }
 }
