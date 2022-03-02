@@ -1,22 +1,11 @@
+import _ from "lodash";
 import React, {
-  useEffect,
-  useState,
-  useRef,
-  forwardRef,
-  useImperativeHandle,
+  forwardRef, ReactNode, useEffect, useImperativeHandle, useRef, useState
 } from "react";
 import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-  Dimensions,
-  ActivityIndicator,
-  Modal,
-  I18nManager,
+  ActivityIndicator, Dimensions, FlatList, I18nManager, Modal, StyleSheet, Text, TouchableOpacity, View
 } from "react-native";
-import _ from "lodash";
+import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 const { width, height } = Dimensions.get("window");
 
 const DROPDOWN_MAX_HEIGHT = height * 0.4;
@@ -32,6 +21,7 @@ const SelectDropdown = (
     defaultValueByIndex /* integer */,
     disabled /* boolean */,
     disableAutoScroll /* boolean */,
+    duration /* number */,
     /////////////////////////////
     buttonStyle /* style object for button */,
     buttonTextStyle /* style object for button text */,
@@ -46,10 +36,12 @@ const SelectDropdown = (
     /////////////////////////////
     rowStyle /* style object for row */,
     rowTextStyle /* style object for row text */,
-    renderCustomizedRowChild /* function returns React component for customized row */,
+    renderCustomizedRowChild /* function returns React component for customized row */
   },
   ref
 ) => {
+
+
   ///////////////////////////////////////////////////////
   useImperativeHandle(ref, () => ({
     reset: () => {
@@ -89,6 +81,11 @@ const SelectDropdown = (
   const [dropdownHEIGHT, setDropdownHEIGHT] = useState(() => {
     return calculateDropdownHeight();
   }); // dropdown height
+
+
+  const animatedTop = useSharedValue(-dropdownHEIGHT);
+  const animatedStyle = useAnimatedStyle(() => { return { transform: [{ translateY: animatedTop.value }], }; });
+
   const [dropdownWIDTH, setDropdownWIDTH] = useState(0); // dropdown width
   ///////////////////////////////////////////////////////
   const [selectedItem, setSelectedItem] = useState(null); // selected item from dropdown
@@ -215,6 +212,9 @@ const SelectDropdown = (
   ///////////////////////////////////////////////////////
   /* ******************** Methods ******************** */
   const openDropdown = () => {
+    if (DropdownButton.current == undefined) {
+      return;
+    }
     DropdownButton.current.measure((fx, fy, w, h, px, py) => {
       // console.log('position y => ', py, '\nheight', h, '\nposition x => ', px)
       if (height - 18 < py + h + dropdownHEIGHT) {
@@ -225,11 +225,13 @@ const SelectDropdown = (
         setDropdownPY(py + h + 2);
       }
       setDropdownWIDTH(dropdownStyle?.width || w);
+      animatedTop.value = withTiming(0, { duration: duration ? duration : 200 });
       setIsVisible(true);
     });
   };
   const closeDropdown = () => {
-    setIsVisible(false);
+    setTimeout(() => { setIsVisible(false) }, duration ? duration : 200);
+    animatedTop.value = withTiming(-dropdownHEIGHT * 2, { duration: duration ? duration : 200 });
   };
   const reset = () => {
     setSelectedItem(null);
@@ -267,6 +269,7 @@ const SelectDropdown = (
         }
       }
     }
+    return defaultValueIndex;
   };
   const getItemLayout = (data, index) => ({
     index,
@@ -324,11 +327,9 @@ const SelectDropdown = (
           supportedOrientations={["portrait", "landscape"]}
           animationType="none"
           transparent={true}
-          statusBarTranslucent={
-            statusBarTranslucent ? statusBarTranslucent : false
-          }
+          statusBarTranslucent={true}
           visible={isVisible}
-          // style={[styles.dropdownOverlay]}
+        // style={[styles.dropdownOverlay]}
         >
           <TouchableOpacity
             activeOpacity={1}
@@ -346,28 +347,29 @@ const SelectDropdown = (
               styles.shadow,
               dropdownStyle,
               styles.dropdownOverlayViewForce,
-              styles.dropdownOverlayViewForceRTL,
-            ]}
+              styles.dropdownOverlayViewForceRTL, { overflow: 'hidden', backgroundColor: 'transparent' }]}
           >
-            {!data || data.length == 0 ? (
-              <View style={[styles.dropdownActivityIndicatorView]}>
-                <ActivityIndicator size="small" color={"#999999"} />
-              </View>
-            ) : (
-              <FlatList
-                data={data}
-                style={[
-                  !!dropdownBackgroundColor && {
-                    backgroundColor: dropdownBackgroundColor,
-                  },
-                ]}
-                keyExtractor={(item, index) => index.toString()}
-                ref={(ref) => (dropDownFlatlistRef.current = ref)}
-                renderItem={renderFlatlistItem}
-                getItemLayout={getItemLayout}
-                onLayout={onLayout}
-              />
-            )}
+            <Animated.View style={[animatedStyle, { backgroundColor: 'white' }]}>
+              {!data || data.length == 0 ? (
+                <View style={[styles.dropdownActivityIndicatorView]}>
+                  <ActivityIndicator size="small" color={"#999999"} />
+                </View>
+              ) : (
+                <FlatList
+                  data={data}
+                  style={[
+                    !!dropdownBackgroundColor && {
+                      backgroundColor: dropdownBackgroundColor,
+                    },
+                  ]}
+                  keyExtractor={(item, index) => index.toString()}
+                  ref={(ref) => (dropDownFlatlistRef.current = ref)}
+                  renderItem={renderFlatlistItem}
+                  getItemLayout={getItemLayout}
+                  onLayout={onLayout}
+                />
+              )}
+            </Animated.View>
           </View>
         </Modal>
       )
@@ -375,6 +377,7 @@ const SelectDropdown = (
   };
   ///////////////////////////////////////////////////////
   return (
+
     <TouchableOpacity
       disabled={disabled}
       ref={DropdownButton}
@@ -399,12 +402,13 @@ const SelectDropdown = (
               ? buttonTextAfterSelection(selectedItem, index)
               : selectedItem
             : defaultButtonText
-            ? defaultButtonText
-            : "Select an option."}
+              ? defaultButtonText
+              : "Select an option."}
         </Text>
       )}
     </TouchableOpacity>
   );
 };
 
+// Shut up typescript
 export default forwardRef((props, ref) => SelectDropdown(props, ref));

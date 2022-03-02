@@ -1,7 +1,7 @@
 import type * as React from "react";
 import { StyleProp, ViewStyle, TextStyle } from "react-native";
 
-declare module "react-native-select-dropdown" {
+declare module "react-native-select-dropdown-reanimated" {
   export type SelectDropdownProps = {
     /**
       * array of data that will be represented in dropdown, can be array of objects
@@ -15,6 +15,10 @@ declare module "react-native-select-dropdown" {
      * default button text when no item is selected
      */
     defaultButtonText?: string;
+    /**
+     * duration of slide down animation in ms (defaults to 200 ms)
+     */
+    duration?: number;
     /**
      * function recieves selected item and its index, this function should return a string that will be represented in button after item is selected
      */

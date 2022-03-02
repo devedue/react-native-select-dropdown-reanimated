@@ -12,7 +12,7 @@ import {
 const { width, height } = Dimensions.get("window");
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import SelectDropdown from "react-native-select-dropdown";
+import SelectDropdown from "react-native-select-dropdown-reanimated";
 
 export default Demo1 = () => {
   const countries = ["Egypt", "Canada", "Australia", "Ireland"];

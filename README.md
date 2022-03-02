@@ -1,3 +1,7 @@
+Fork of [react-native-select-dropdown](https://github.com/AdelRedaa97/react-native-select-dropdown) with slide using [react-native-reanimated](https://github.com/software-mansion/react-native-reanimated)
+
+# Original Documentation:
+
 # react-native-select-dropdown
 
 react-native-select-dropdown is a highly customized dropdown | select | picker | menu for react native that works for andriod and iOS platforms.
@@ -7,13 +11,13 @@ react-native-select-dropdown is a highly customized dropdown | select | picker |
 #### # Using npm
 
 ```bash
-npm install react-native-select-dropdown
+npm install react-native-select-dropdown-reanimated
 ```
 
 #### # Using yarn
 
 ```bash
-yarn add react-native-select-dropdown
+yarn add react-native-select-dropdown-reanimated
 ```
 
 ## Demo
@@ -26,7 +30,7 @@ yarn add react-native-select-dropdown
 ## Usage
 
 ```
-import SelectDropdown from 'react-native-select-dropdown'
+import SelectDropdown from 'react-native-select-dropdown-reanimated'
 ...
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 ...
