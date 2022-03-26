@@ -216,10 +216,10 @@ const SelectDropdown = (
       return;
     }
     DropdownButton.current.measure((fx, fy, w, h, px, py) => {
-      // console.log('position y => ', py, '\nheight', h, '\nposition x => ', px)
       if (height - 18 < py + h + dropdownHEIGHT) {
         setDropdownPX(px);
         setDropdownPY(py - 2 - dropdownHEIGHT);
+        animatedTop.value = dropdownHEIGHT;
       } else {
         setDropdownPX(px);
         setDropdownPY(py + h + 2);
@@ -230,8 +230,14 @@ const SelectDropdown = (
     });
   };
   const closeDropdown = () => {
-    setTimeout(() => { setIsVisible(false) }, duration ? duration : 200);
-    animatedTop.value = withTiming(-dropdownHEIGHT * 2, { duration: duration ? duration : 200 });
+    DropdownButton.current.measure((fx, fy, w, h, px, py) => {
+      if (height - 18 < py + h + dropdownHEIGHT) {
+        animatedTop.value = withTiming(dropdownHEIGHT * 2, { duration: duration ? duration : 200 });
+      } else {
+        animatedTop.value = withTiming(-dropdownHEIGHT * 2, { duration: duration ? duration : 200 });
+      }
+      setTimeout(() => { setIsVisible(false) }, duration ? duration : 200);
+    });
   };
   const reset = () => {
     setSelectedItem(null);
