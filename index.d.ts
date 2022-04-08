@@ -91,6 +91,10 @@ declare module "react-native-select-dropdown-reanimated" {
      * function recieves item and its index, this function should return React component as a child for customized row rowStyle should be used for parent row view style.
      */
     renderCustomizedRowChild?: (selectedItem: any, index: number) => React.ReactNode;
+    /**
+     * Disable animation
+     */
+    disableAnimation?: boolean
   };
 
   export default class SelectDropdown extends React.Component<SelectDropdownProps> {

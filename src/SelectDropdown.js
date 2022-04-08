@@ -36,7 +36,8 @@ const SelectDropdown = (
     /////////////////////////////
     rowStyle /* style object for row */,
     rowTextStyle /* style object for row text */,
-    renderCustomizedRowChild /* function returns React component for customized row */
+    renderCustomizedRowChild /* function returns React component for customized row */,
+    disableAnimation
   },
   ref
 ) => {
@@ -225,7 +226,7 @@ const SelectDropdown = (
         setDropdownPY(py + h + 2);
       }
       setDropdownWIDTH(dropdownStyle?.width || w);
-      animatedTop.value = withTiming(0, { duration: duration ? duration : 200 });
+      animatedTop.value = withTiming(0, { duration: duration && !disableAnimation ? duration : 200 });
       setIsVisible(true);
     });
   };
@@ -236,7 +237,7 @@ const SelectDropdown = (
       } else {
         animatedTop.value = withTiming(-dropdownHEIGHT * 2, { duration: duration ? duration : 200 });
       }
-      setTimeout(() => { setIsVisible(false) }, duration ? duration : 200);
+      setTimeout(() => { setIsVisible(false) }, duration && !disableAnimation ? duration : 200);
     });
   };
   const reset = () => {
@@ -355,7 +356,7 @@ const SelectDropdown = (
               styles.dropdownOverlayViewForce,
               styles.dropdownOverlayViewForceRTL, { overflow: 'hidden', backgroundColor: 'transparent' }]}
           >
-            <Animated.View style={[animatedStyle, { backgroundColor: 'white' }]}>
+            <Animated.View style={[!disableAnimation ? animatedStyle : undefined, { backgroundColor: 'white' }]}>
               {!data || data.length == 0 ? (
                 <View style={[styles.dropdownActivityIndicatorView]}>
                   <ActivityIndicator size="small" color={"#999999"} />
